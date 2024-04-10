@@ -105,6 +105,8 @@ func TestEmbeddedPointerTypeStruct(t *testing.T) {
 		URL   string
 	}
 
+	type Address string
+
 	type Author struct {
 		ID          string
 		Name        string
@@ -114,6 +116,7 @@ func TestEmbeddedPointerTypeStruct(t *testing.T) {
 		ContentPtr  *Content
 		Birthday    time.Time
 		BirthdayPtr *time.Time
+		Address     Address
 	}
 
 	type HNPost struct {
@@ -182,6 +185,10 @@ func TestEmbeddedPointerTypeStruct(t *testing.T) {
 
 	if hnPost.Author.BirthdayPtr != nil {
 		t.Errorf("Expected to get nil Author birthdayPtr but got: %+v", hnPost.Author.BirthdayPtr)
+	}
+
+	if !reflect.DeepEqual(NewPost.Author.Address, hnPost.Author.Address) {
+		t.Errorf("Expected to get Author Address %v but got: %v", NewPost.Author.Address, hnPost.Author.Address)
 	}
 }
 
